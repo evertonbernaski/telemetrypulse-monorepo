@@ -1,0 +1,94 @@
+<main class="shell">
+  <header class="topbar">
+    <section>
+      <p class="eyebrow">TelemetryPulse</p>
+      <h1>Fleet Dashboard</h1>
+    </section>
+
+    <tp-connection-status [state]="(connectionState$ | async) ?? 'connecting'"></tp-connection-status>
+  </header>
+
+  <section class="summary" aria-label="Resumo da frota">
+    <div>
+      <span class="metric">{{ vehicleCount$ | async }}</span>
+      <span class="label">veículos ativos</span>
+    </div>
+    <div>
+      <span class="metric">{{ activeFilterCount() }}</span>
+      <span class="label">filtros ativos</span>
+    </div>
+  </section>
+
+  <section class="content">
+    <section class="vehicles" aria-label="Veículos ativos">
+      <div class="section-title">
+        <h2>Veículos Ativos</h2>
+      </div>
+
+      <div class="vehicle-grid">
+        @for (vehicle of vehicles$ | async; track vehicle.vehicleId) {
+          <article class="vehicle-card" [ngClass]="vehicle.status.toLowerCase()">
+            <div class="vehicle-card__header">
+              <strong>{{ vehicle.vehicleId }}</strong>
+              <span>{{ vehicle.status }}</span>
+            </div>
+            <dl>
+              <div>
+                <dt>Bateria</dt>
+                <dd>{{ vehicle.batteryLevel | number:'1.0-1' }}%</dd>
+              </div>
+              <div>
+                <dt>Velocidade</dt>
+                <dd>{{ vehicle.speed | number:'1.0-1' }} km/h</dd>
+              </div>
+              <div>
+                <dt>Motor</dt>
+                <dd>{{ vehicle.motorTemperature | number:'1.0-1' }} C</dd>
+              </div>
+              <div>
+                <dt>Última leitura</dt>
+                <dd>{{ vehicle.lastTelemetryAt | date:'HH:mm:ss' }}</dd>
+              </div>
+            </dl>
+          </article>
+        } @empty {
+          <p class="empty">Nenhum veículo recebido ainda.</p>
+        }
+      </div>
+    </section>
+
+    <aside class="alerts" aria-label="Alertas recentes">
+      <div class="section-title">
+        <h2>Alertas Recentes</h2>
+      </div>
+
+      <form class="filters">
+        <input
+          type="search"
+          placeholder="ID do veículo"
+          [ngModel]="vehicleId()"
+          (ngModelChange)="vehicleId.set($event)"
+          name="vehicleId"
+        >
+        <select
+          [ngModel]="alertType()"
+          (ngModelChange)="alertType.set($event)"
+          name="alertType"
+        >
+          <option value="">Todos</option>
+          <option value="SPEED_LIMIT_EXCEEDED">Velocidade</option>
+          <option value="BATTERY_CRITICAL">Bateria</option>
+        </select>
+        <button type="button" (click)="clearFilters()">Limpar</button>
+      </form>
+
+      <div class="alert-list">
+        @for (alert of filteredAlerts$ | async; track alert.id) {
+          <tp-alert-card [alert]="alert"></tp-alert-card>
+        } @empty {
+          <p class="empty">Nenhum alerta recente.</p>
+        }
+      </div>
+    </aside>
+  </section>
+</main>
