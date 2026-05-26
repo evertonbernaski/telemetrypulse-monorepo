@@ -5,7 +5,7 @@
   "scripts": {
     "start:frontend": "nx serve fleet-dashboard",
     "build:frontend": "nx build fleet-dashboard",
-    "test:frontend": "nx test fleet-dashboard",
+    "test:frontend": "nx run-many -t test -p fleet-dashboard,shared-ui",
     "start:backend": "cd apps/telemetry-processor && ./mvnw spring-boot:run",
     "test:backend": "cd apps/telemetry-processor && ./mvnw test",
     "build:backend": "cd apps/telemetry-processor && ./mvnw package",

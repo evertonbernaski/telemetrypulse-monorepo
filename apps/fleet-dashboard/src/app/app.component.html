@@ -19,6 +19,12 @@
     </div>
   </section>
 
+  @if ((connectionState$ | async) === 'disconnected') {
+    <section class="connection-warning" role="status">
+      Conexão em tempo real interrompida. O navegador tentará reconectar automaticamente.
+    </section>
+  }
+
   <section class="content">
     <section class="vehicles" aria-label="Veículos ativos">
       <div class="section-title">
@@ -65,7 +71,8 @@
       <form class="filters">
         <input
           type="search"
-          placeholder="ID do veículo"
+          placeholder="Ex: EV-003"
+          aria-label="Filtrar alertas por ID do veículo"
           [ngModel]="vehicleId()"
           (ngModelChange)="vehicleId.set($event)"
           name="vehicleId"

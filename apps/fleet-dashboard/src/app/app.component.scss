@@ -41,6 +41,16 @@ h2 {
   margin-bottom: 20px;
 }
 
+.connection-warning {
+  border: 1px solid #f2b8b5;
+  border-radius: 8px;
+  background: #fff8f7;
+  color: var(--critical);
+  font-weight: 700;
+  margin-bottom: 20px;
+  padding: 12px 14px;
+}
+
 .summary > div {
   border: 1px solid var(--panel-border);
   border-radius: 8px;
