@@ -141,23 +141,3 @@ npm run test:frontend
 ```
 
 Esse comando executa os testes do dashboard e da biblioteca `shared-ui`.
-
-## Checklist Do Desafio
-
-- [x] Monorepo com `apps` e `libs`.
-- [x] Aplicação Angular `fleet-dashboard`.
-- [x] Serviço Java Spring Boot `telemetry-processor`.
-- [x] Biblioteca Angular `shared-ui`.
-- [x] Contratos compartilhados em `shared-contracts`.
-- [x] Ingestão de telemetria.
-- [x] Regras de alerta exigidas.
-- [x] Stream em tempo real com SSE.
-- [x] Lista de veículos ativos.
-- [x] Painel de alertas recentes.
-- [x] Filtro por tipo de alerta e ID do veículo.
-- [x] Modelagem e índices para consultas históricas.
-- [x] Docker Compose para ambiente local.
-- [x] Testes unitários backend.
-- [x] Teste de integração backend com PostgreSQL/Testcontainers.
-- [x] Testes de componentes na biblioteca `shared-ui`.
-- [x] Endpoint histórico de telemetria por veículo e período.
