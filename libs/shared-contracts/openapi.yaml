@@ -4,6 +4,42 @@ info:
   version: 0.1.0
 paths:
   /api/telemetry:
+    get:
+      summary: Returns historical telemetry readings for a vehicle in a time range.
+      parameters:
+        - name: vehicleId
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 500
+            default: 100
+      responses:
+        '200':
+          description: Historical readings ordered by occurrence date descending.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TelemetryHistoryReading'
     post:
       summary: Ingests a telemetry reading and publishes realtime events.
       requestBody:
@@ -132,6 +168,31 @@ components:
         message:
           type: string
         createdAt:
+          type: string
+          format: date-time
+    TelemetryHistoryReading:
+      type: object
+      required: [id, vehicleId, batteryLevel, speed, motorTemperature, latitude, longitude, occurredAt, receivedAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        vehicleId:
+          type: string
+        batteryLevel:
+          type: number
+        speed:
+          type: number
+        motorTemperature:
+          type: number
+        latitude:
+          type: number
+        longitude:
+          type: number
+        occurredAt:
+          type: string
+          format: date-time
+        receivedAt:
           type: string
           format: date-time
     TelemetryEvent:

@@ -36,6 +36,18 @@ export interface TelemetryEvent {
   alerts: AlertEvent[];
 }
 
+export interface TelemetryHistoryReading {
+  id: string;
+  vehicleId: string;
+  batteryLevel: number;
+  speed: number;
+  motorTemperature: number;
+  latitude: number;
+  longitude: number;
+  occurredAt: string;
+  receivedAt: string;
+}
+
 export interface RealtimeEnvelope<TPayload> {
   type: 'telemetry' | 'alert';
   payload: TPayload;
