@@ -1,0 +1,146 @@
+openapi: 3.0.3
+info:
+  title: TelemetryPulse API
+  version: 0.1.0
+paths:
+  /api/telemetry:
+    post:
+      summary: Ingests a telemetry reading and publishes realtime events.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TelemetryIngestRequest'
+      responses:
+        '202':
+          description: Telemetry accepted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TelemetryEvent'
+  /api/stream:
+    get:
+      summary: Server-Sent Events stream for telemetry and alert events.
+      responses:
+        '200':
+          description: Event stream.
+          content:
+            text/event-stream:
+              schema:
+                type: string
+  /api/vehicles:
+    get:
+      summary: Returns the latest status for active vehicles.
+      responses:
+        '200':
+          description: Vehicle statuses.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VehicleStatus'
+  /api/alerts:
+    get:
+      summary: Returns recent alerts with optional filtering.
+      parameters:
+        - name: vehicleId
+          in: query
+          schema:
+            type: string
+        - name: type
+          in: query
+          schema:
+            $ref: '#/components/schemas/AlertType'
+      responses:
+        '200':
+          description: Recent alerts.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AlertEvent'
+components:
+  schemas:
+    AlertType:
+      type: string
+      enum: [SPEED_LIMIT_EXCEEDED, BATTERY_CRITICAL]
+    TelemetryIngestRequest:
+      type: object
+      required: [vehicleId, batteryLevel, speed, motorTemperature, latitude, longitude]
+      properties:
+        vehicleId:
+          type: string
+        batteryLevel:
+          type: number
+          minimum: 0
+          maximum: 100
+        speed:
+          type: number
+          minimum: 0
+        motorTemperature:
+          type: number
+        latitude:
+          type: number
+          minimum: -90
+          maximum: 90
+        longitude:
+          type: number
+          minimum: -180
+          maximum: 180
+        occurredAt:
+          type: string
+          format: date-time
+    VehicleStatus:
+      type: object
+      required: [vehicleId, batteryLevel, speed, motorTemperature, latitude, longitude, status, lastTelemetryAt]
+      properties:
+        vehicleId:
+          type: string
+        batteryLevel:
+          type: number
+        speed:
+          type: number
+        motorTemperature:
+          type: number
+        latitude:
+          type: number
+        longitude:
+          type: number
+        status:
+          type: string
+          enum: [ONLINE, ATTENTION]
+        lastTelemetryAt:
+          type: string
+          format: date-time
+    AlertEvent:
+      type: object
+      required: [id, vehicleId, type, severity, message, createdAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        vehicleId:
+          type: string
+        type:
+          $ref: '#/components/schemas/AlertType'
+        severity:
+          type: string
+          enum: [WARNING, CRITICAL]
+        message:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+    TelemetryEvent:
+      type: object
+      required: [vehicle, alerts]
+      properties:
+        vehicle:
+          $ref: '#/components/schemas/VehicleStatus'
+        alerts:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlertEvent'
