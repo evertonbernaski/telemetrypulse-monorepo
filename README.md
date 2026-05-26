@@ -101,6 +101,16 @@ Consultas:
 
 - `GET /api/vehicles`
 - `GET /api/alerts?vehicleId=EV-001&type=BATTERY_CRITICAL`
+- `GET /api/telemetry?vehicleId=EV-001&from=2026-01-01T00:00:00Z&to=2026-01-02T00:00:00Z&limit=100`
+
+## Decisões Arquiteturais
+
+- **SSE para tempo real**: o fluxo é server-to-client, então SSE mantém a solução simples, compatível com HTTP e suficiente para broadcast de telemetrias e alertas.
+- **Spring JDBC no caminho de ingestão**: a escrita de telemetria é volumosa; JDBC mantém inserts e upserts explícitos, com baixo overhead e controle claro sobre SQL e índices.
+- **Snapshot de veículo separado do histórico**: `vehicles` guarda o estado atual para leitura rápida no dashboard, enquanto `telemetry_readings` mantém o volume histórico.
+- **Regras stateless**: cada regra de alerta implementa `AlertRule`, o que facilita testes unitários e permite adicionar novas regras sem alterar o fluxo principal.
+- **Contratos compartilhados**: `libs/shared-contracts` documenta payloads em TypeScript e OpenAPI, reduzindo divergência entre backend e frontend.
+- **Angular OnPush + RxJS**: o dashboard acumula eventos em streams e evita renderizações desnecessárias com componentes standalone e `ChangeDetectionStrategy.OnPush`.
 
 ## Banco de Dados
 
@@ -122,11 +132,15 @@ cd apps/telemetry-processor
 ./mvnw test
 ```
 
+Os testes incluem regras unitárias e um teste de integração com PostgreSQL via Testcontainers cobrindo ingestão, geração de alertas e consulta histórica.
+
 Frontend:
 
 ```bash
 npm run test:frontend
 ```
+
+Esse comando executa os testes do dashboard e da biblioteca `shared-ui`.
 
 ## Checklist Do Desafio
 
@@ -144,3 +158,6 @@ npm run test:frontend
 - [x] Modelagem e índices para consultas históricas.
 - [x] Docker Compose para ambiente local.
 - [x] Testes unitários backend.
+- [x] Teste de integração backend com PostgreSQL/Testcontainers.
+- [x] Testes de componentes na biblioteca `shared-ui`.
+- [x] Endpoint histórico de telemetria por veículo e período.
