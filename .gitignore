@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.nx/
+coverage/
+target/
+.mvn/wrapper/maven-wrapper.jar
+*.log
+.idea/
+.vscode/
+.env
