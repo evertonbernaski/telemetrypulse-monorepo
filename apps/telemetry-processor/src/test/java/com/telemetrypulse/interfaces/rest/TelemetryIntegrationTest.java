@@ -1,6 +1,9 @@
 package com.telemetrypulse.interfaces.rest;
 
 import com.telemetrypulse.domain.AlertType;
+import com.telemetrypulse.interfaces.rest.telemetry.TelemetryEventResponse;
+import com.telemetrypulse.interfaces.rest.telemetry.TelemetryHistoryResponse;
+import com.telemetrypulse.interfaces.rest.telemetry.TelemetryIngestRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;

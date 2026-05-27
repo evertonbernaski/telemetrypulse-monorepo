@@ -1,6 +1,7 @@
-package com.telemetrypulse.interfaces.rest;
+package com.telemetrypulse.interfaces.rest.vehicle;
 
 import com.telemetrypulse.infrastructure.persistence.VehicleRepository;
+import com.telemetrypulse.interfaces.rest.telemetry.TelemetryEventResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

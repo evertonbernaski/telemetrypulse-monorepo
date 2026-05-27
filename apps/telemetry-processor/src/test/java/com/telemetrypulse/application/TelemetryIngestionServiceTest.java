@@ -5,7 +5,7 @@ import com.telemetrypulse.infrastructure.persistence.AlertRepository;
 import com.telemetrypulse.infrastructure.persistence.TelemetryRepository;
 import com.telemetrypulse.infrastructure.persistence.VehicleRepository;
 import com.telemetrypulse.infrastructure.streaming.RealtimeEventPublisher;
-import com.telemetrypulse.interfaces.rest.TelemetryIngestRequest;
+import com.telemetrypulse.interfaces.rest.telemetry.TelemetryIngestRequest;
 import org.junit.jupiter.api.Test;
 
 import java.time.Clock;

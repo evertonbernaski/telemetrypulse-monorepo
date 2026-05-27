@@ -1,6 +1,6 @@
 package com.telemetrypulse.infrastructure.streaming;
 
-import com.telemetrypulse.interfaces.rest.TelemetryEventResponse;
+import com.telemetrypulse.interfaces.rest.telemetry.TelemetryEventResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 

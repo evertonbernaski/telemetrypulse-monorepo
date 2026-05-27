@@ -1,4 +1,4 @@
-package com.telemetrypulse.interfaces.rest;
+package com.telemetrypulse.interfaces.rest.stream;
 
 import com.telemetrypulse.infrastructure.streaming.RealtimeEventPublisher;
 import org.springframework.http.MediaType;

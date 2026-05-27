@@ -1,7 +1,8 @@
-package com.telemetrypulse.interfaces.rest;
+package com.telemetrypulse.interfaces.rest.alert;
 
 import com.telemetrypulse.domain.AlertType;
 import com.telemetrypulse.infrastructure.persistence.AlertRepository;
+import com.telemetrypulse.interfaces.rest.telemetry.TelemetryEventResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

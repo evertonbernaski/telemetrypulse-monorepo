@@ -1,4 +1,4 @@
-package com.telemetrypulse.interfaces.rest;
+package com.telemetrypulse.interfaces.rest.telemetry;
 
 import com.telemetrypulse.domain.Alert;
 import com.telemetrypulse.domain.AlertSeverity;
