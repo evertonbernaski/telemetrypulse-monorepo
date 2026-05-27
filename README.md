@@ -7,7 +7,7 @@ TelemetryPulse é um monorepo com um processador Java Spring Boot e um dashboard
 ```text
 apps/
   fleet-dashboard/          Angular 17+ com dashboard reativo
-  telemetry-processor/      Java 21 + Spring Boot
+  telemetry-processor/      Java 17 + Spring Boot
 libs/
   shared-ui/                Componentes Angular reutilizáveis
   shared-contracts/         Tipos TypeScript e OpenAPI
@@ -45,7 +45,7 @@ Para simular telemetrias no Windows PowerShell:
 
 Pré-requisitos:
 
-- Java 21.
+- Java 17+.
 - Node 18+.
 - Docker apenas para PostgreSQL, caso não tenha um banco local.
 
@@ -60,6 +60,12 @@ Backend:
 ```bash
 cd apps/telemetry-processor
 ./mvnw spring-boot:run
+```
+
+Também é possível executar pelo Nx:
+
+```bash
+npx nx serve telemetry-processor
 ```
 
 Frontend:
@@ -132,7 +138,13 @@ cd apps/telemetry-processor
 ./mvnw test
 ```
 
-Os testes incluem regras unitárias e um teste de integração com PostgreSQL via Testcontainers cobrindo ingestão, geração de alertas e consulta histórica.
+Ou pelo target do monorepo:
+
+```bash
+npx nx test telemetry-processor
+```
+
+Os testes incluem regras unitárias e um teste de integração HTTP com H2 em modo PostgreSQL cobrindo ingestão, geração de alertas e consulta histórica.
 
 Frontend:
 

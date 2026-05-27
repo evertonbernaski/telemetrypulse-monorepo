@@ -1,4 +1,4 @@
-FROM eclipse-temurin:21-jdk-jammy AS build
+FROM eclipse-temurin:17-jdk-jammy AS build
 WORKDIR /workspace
 
 COPY apps/telemetry-processor/.mvn .mvn
@@ -8,7 +8,7 @@ RUN chmod +x ./mvnw && ./mvnw -q -DskipTests dependency:go-offline
 COPY apps/telemetry-processor/src src
 RUN ./mvnw -q package -DskipTests
 
-FROM eclipse-temurin:21-jre-jammy
+FROM eclipse-temurin:17-jre-jammy
 WORKDIR /app
 COPY --from=build /workspace/target/telemetry-processor-0.1.0.jar app.jar
 EXPOSE 8080

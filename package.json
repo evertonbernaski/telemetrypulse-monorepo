@@ -9,6 +9,7 @@
     "start:backend": "cd apps/telemetry-processor && ./mvnw spring-boot:run",
     "test:backend": "cd apps/telemetry-processor && ./mvnw test",
     "build:backend": "cd apps/telemetry-processor && ./mvnw package",
+    "nx:backend": "nx show project telemetry-processor",
     "test": "npm run test:frontend && npm run test:backend"
   },
   "devDependencies": {
