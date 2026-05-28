@@ -56,6 +56,16 @@
                 <dd>{{ vehicle.lastTelemetryAt | date:'HH:mm:ss' }}</dd>
               </div>
             </dl>
+            <div class="location">
+              <span>Localização</span>
+              <a
+                [href]="'https://www.google.com/maps?q=' + vehicle.latitude + ',' + vehicle.longitude"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {{ vehicle.latitude | number:'1.4-4' }}, {{ vehicle.longitude | number:'1.4-4' }}
+              </a>
+            </div>
           </article>
         } @empty {
           <p class="empty">Nenhum veículo recebido ainda.</p>
@@ -89,12 +99,14 @@
         <button type="button" (click)="clearFilters()">Limpar</button>
       </form>
 
-      <div class="alert-list">
-        @for (alert of filteredAlerts$ | async; track alert.id) {
-          <tp-alert-card [alert]="alert"></tp-alert-card>
-        } @empty {
-          <p class="empty">Nenhum alerta recente.</p>
-        }
+      <div class="alert-scroll">
+        <div class="alert-list">
+          @for (alert of filteredAlerts$ | async; track alert.id) {
+            <tp-alert-card [alert]="alert"></tp-alert-card>
+          } @empty {
+            <p class="empty">Nenhum alerta recente.</p>
+          }
+        </div>
       </div>
     </aside>
   </section>

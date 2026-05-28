@@ -140,6 +140,30 @@ dd {
   font-weight: 700;
 }
 
+.location {
+  border-top: 1px solid var(--panel-border);
+  display: grid;
+  gap: 3px;
+  margin-top: 12px;
+  padding-top: 10px;
+}
+
+.location span {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.location a {
+  color: var(--accent);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.location a:hover {
+  text-decoration: underline;
+}
+
 .filters {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 140px 78px;
@@ -167,6 +191,14 @@ dd {
 .alert-list {
   display: grid;
   gap: 10px;
+}
+
+.alert-scroll {
+  max-height: calc(100vh - 310px);
+  min-height: 320px;
+  overflow-y: auto;
+  padding-right: 4px;
+  scrollbar-gutter: stable;
 }
 
 .empty {
